@@ -1,0 +1,18 @@
+{{access_token}}
+{% if request.session.nickName %}
+<!--true-->
+<h1>카카오 로그인</h1>
+<form action="/info" method="GET">
+    <input type="submit" value="카카오로그인" />
+</form>
+{%else%}
+<!--false-->
+<h1>카카오 로그아웃</h1>
+
+<span>{{ request.session.nickName }}</span>
+<img src="{{ request.session.thumbnailURL }}">
+<form action="/logout" method="GET">
+    <input type="submit" value="카카오로그아웃 및 연결 끊기" />
+</form>
+
+{%endif%}

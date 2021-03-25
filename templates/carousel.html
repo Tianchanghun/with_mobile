@@ -1,0 +1,47 @@
+{%for banner in mainbanner.all%}
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+
+  <div class="carousel-inner h-400">
+    {%if banner.image_thumbnail_1%}
+    <div class="carousel-item h-400 active">
+      <img src="{{banner.image_thumbnail_1.url}}" class="d-block w-100 h-400" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h2>{{banner.first_label}}</h2>
+        <p>{{banner.first_copy}}</p>
+      </div>
+    </div>
+    {%endif%}
+    {%if banner.image_thumbnail_2%}
+    <div class="carousel-item h-400">
+      <img src="{{banner.image_thumbnail_2.url}}" class="d-block w-100 h-400" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>{{banner.second_label}}</h3>
+        <p>{{banner.second_copy}}</p>
+      </div>
+    </div>
+    {%endif%}
+    {%if banner.image_thumbnail_3%}
+    <div class="carousel-item h-400">
+      <img src="{{banner.image_thumbnail_3.url}}" class="d-block w-100 h-400" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h3>{{banner.Third_label}}</h3>
+        <p>{{banner.third_copy}}</p>
+      </div>
+    </div>
+    {%endif%}
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"  data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+{%endfor%}

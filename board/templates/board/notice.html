@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load information_filter %}
+{%block title%}request{%endblock%}
+
+{%block content%}
+<div class="container">
+    {%include 'subbanner.html'%}
+    <div class="shadow-sm p-3 mb-5 bg-body rounded">Notice</div>
+
+
+    <div class="container my-3">
+
+
+        {% if Board %}
+        <div class="accordion" id="accordionExample">
+
+
+            {% for board in Board %}
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading_{{board.id}}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_{{board.id}}" aria-expanded="false" aria-controls="collapse_{{board.id}}">
+                        <div class="col-2">{{ Board.paginator.count|sub:Board.start_index|sub:forloop.counter0|add:1 }}</div>
+                        <div class="col-5">{{ board.board_title|truncatechars:30 }}</div>
+                        <div class="col-2">{{ board.created_date |date:"Y M d (D)" }}</div>
+                    </button>
+                </h2>
+                <div id="collapse_{{board.id}}" class="accordion-collapse collapse" aria-labelledby="_{{board.id}}" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+
+                        {{ board.board_text|safe}}
+
+                    </div>
+                </div>
+            </div>
+
+            {%endfor%}
+            {%else%}
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse" aria-expanded="false" aria-controls="collapse">
+                        작성내용이 없습니다.
+                    </button>
+                </h2>
+                <div id="collapse" class="accordion-collapse collapse" aria-labelledby="" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        작성 내용이 없습니다.
+                    </div>
+                </div>
+            </div>
+
+            {%endif%}
+
+        </div>
+
+        <!-- ------------------------------- [edit] -------------------------------- -->
+        <div class="row justify-content-end my-3">
+            <div class="col-4 input-group">
+                <input type="text" class="form-control kw" value="{{ kw|default_if_none:'' }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+                </div>
+            </div>
+        </div>
+        <!-- ----------------------------------------------------------------------- -->
+
+        <!-- ------------------------------- [edit] -------------------------------- -->
+        <!-- 페이징처리 시작 -->
+        <ul class="pagination justify-content-center">
+            <!-- 이전페이지 -->
+            {% if Board.has_previous %}
+            <li class="page-item">
+                <!-- ------------------------------- [edit] -------------------------------- -->
+                <a class="page-link" data-page="{{ Board.previous_page_number }}" href="#">이전</a>
+                <!-- ----------------------------------------------------------------------- -->
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+            </li>
+            {% endif %}
+            <!-- 페이지리스트 -->
+            {% for page_number in Board.paginator.page_range %}
+            {% if page_number >= Board.number|add:-5 and page_number <= Board.number|add:5 %}
+            {% if page_number == Board.number %}
+            <li class="page-item active" aria-current="page">
+                <!-- ------------------------------- [edit] -------------------------------- -->
+                <a class="page-link" data-page="{{ page_number }}" href="#">{{ page_number }}</a>
+                <!-- ----------------------------------------------------------------------- -->
+            </li>
+            {% else %}
+            <li class="page-item">
+                <!-- ------------------------------- [edit] -------------------------------- -->
+                <a class="page-link" data-page="{{ page_number }}" href="#">{{ page_number }}</a>
+                <!-- ----------------------------------------------------------------------- -->
+            </li>
+            {% endif %}
+            {%endif%}
+            {% endfor %}
+            <!-- 다음페이지 -->
+            {% if Board.has_next %}
+            <li class="page-item">
+                <!-- ------------------------------- [edit] -------------------------------- -->
+                <a class="page-link" data-page="{{ Board.next_page_number }}" href="#">다음</a>
+                <!-- ----------------------------------------------------------------------- -->
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+        <!-- 페이징처리 끝 -->
+        <!-- ------------------------------- [edit] -------------------------------- -->
+        <form id="searchForm" method="get" action="{% url 'notice' %}">
+            <input type="hidden" id="kw" name="kw" value="{{ kw|default_if_none:'' }}">
+            <input type="hidden" id="page" name="page" value="{{ page }}">
+        </form>
+        <!-- ----------------------------------------------------------------------- -->
+    </div>
+</div>
+<!-- ------------------------------- [edit] -------------------------------- -->
+{% block script %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type='text/javascript'>
+$(document).ready(function(){
+    $(".page-link").on('click', function() {
+        $("#page").val($(this).data("page"));
+        $("#searchForm").submit();
+    });
+
+    $("#btn_search").on('click', function() {
+        $("#kw").val($(".kw").val());
+        $("#page").val(1);  // 검색버튼을 클릭할 경우 1페이지부터 조회한다.
+        $("#searchForm").submit();
+    });
+});
+</script>
+{% endblock %}
+<!-- ----------------------------------------------------------------------- -->
+
+{%endblock%}

@@ -1,0 +1,88 @@
+{%load static%}
+<nav class="navbar sticky-top navbar-expand-lg navbar-light" style="background-color: #E7E7E4;">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="http://127.0.0.1:8000">
+      <!--      <img src="{%static 'image/top_logo.png'%}" alt="" width="143" height="40" class="d-inline-block align-top">-->
+      입찰모아
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="far fa-newspaper"></i>
+            Introduction
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li>
+              <a class="nav-link" href="#">
+                <i class="fas fa-bullhorn"></i>
+                Introduction1
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+
+              <a class="nav-link" href="#">
+                <i class="far fa-grin-stars"></i>
+                Introduction2
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-chalkboard-teacher"></i>
+            info
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <i class="fas fa-question"></i>
+            progression
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="far fa-newspaper"></i>
+            Board
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+            <li>
+              <a class="nav-link" href="{% url 'notice'%}">
+                <i class="fas fa-bullhorn"></i>
+                Notice
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="nav-link" href="{% url 'news'%}">
+                <i class="far fa-grin-stars"></i>
+                News
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <span class="navbar-text">
+
+          {% if request.session.check%}
+          <!--true-->
+          <form action="/info" method="GET">
+            <button type="submit" class="btn btn-warning btn-sm">log in</button>
+          </form>
+          {%else%}
+          <!--false-->
+          <form action="/logout" method="GET">
+          <img src="{{ request.session.thumbnailURL }}" class="rounded-circle" width="25px">
+            {{ request.session.nickName }}
+            <button type="submit" class="btn btn-warning btn-sm">log out</button>
+          </form>
+          {%endif%}
+    </span>
+    </div>
+  </div>
+</nav>
+

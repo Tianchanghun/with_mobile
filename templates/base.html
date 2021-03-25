@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    {%load static%}
+    <meta charset="UTF-8">
+    <title>입찰모아-{%block title%}{%endblock%}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {%include 'seo.html'%}
+    <!-- Bootstrap CSS -->
+    <link href="{% static '/bootstrap/css/bootstrap.css'%}" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap JS -->
+    <script src="{% static '/bootstrap/js/bootstrap.bundle.min.js'%}" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+</head>
+<body>
+{%include 'navbar.html'%}
+{%include 'carousel.html'%}
+{%block content%}
+{%endblock%}
+{%include 'bottom.html'%}
+</body>
+</html>
